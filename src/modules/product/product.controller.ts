@@ -11,7 +11,7 @@ async function getProducts(req: FastifyRequest, reply: FastifyReply) {
   reply.code(201).send(products);
 }
 async function deleteProducts(req: FastifyRequest, reply: FastifyReply) {
-  const productId = Number(req.query.id);
+  const productId = parseInt(req.query.id);
   console.log("productId", productId);
 
   const deleted = await prisma.products.delete(
@@ -54,6 +54,7 @@ async function updateProducts(req: FastifyRequest, reply: FastifyReply) {
 }
 
 async function createProduct(req: FastifyRequest, reply: FastifyReply) {
+  console.log("req_body",req.body)
   const { name, picture } = req.body;
   const newProduct = await prisma.products.create({
     data: {
