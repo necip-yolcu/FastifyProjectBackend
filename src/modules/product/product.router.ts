@@ -1,12 +1,11 @@
-import {FastifyInstance} from "fastify"
-import { createProductHandler } from "./product.controller"
-import { $ref } from "./product.schema"
-async function productRoutes(server:FastifyInstance) {
-    server.post('/',{schema:{
-        body:$ref('createProductSchema'),
-        response:{
-            201:$ref('productResponseSchema')
-        }
-    }},createProductHandler)
+const productController = require('./product.controller');
+
+
+async function productRouter(fastify) {
+  fastify.get('/products',  productController.getProducts);
+  fastify.post('/products/add',  productController.createProduct);
+  fastify.put('/products/update/:id', productController.updateProducts);
+  fastify.delete('/products/delete/:id', productController.deleteProducts);
 }
-export default productRoutes
+
+export default productRouter
